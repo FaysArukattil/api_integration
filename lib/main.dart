@@ -1,3 +1,8 @@
+// ignore: unused_import
+import 'package:api_integration/views/myposts_screen.dart';
+// ignore: unused_import
+import 'package:api_integration/views/newpage.dart';
+// ignore: unused_import
 import 'package:api_integration/views/product_list_view.dart';
 // import 'package:api_integration/views/todoviewingpage.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +17,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: MyWidget(), debugShowCheckedModeBanner: false);
+    return MaterialApp(home: Newpage(), debugShowCheckedModeBanner: false);
   }
 }
 

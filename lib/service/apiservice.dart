@@ -1,6 +1,7 @@
 //GET    POST   PUT(edit)   DELETE
 
 import 'dart:convert';
+import 'package:api_integration/models/posts.dart';
 import 'package:api_integration/models/resp_Todo/getalltodo.dart';
 import 'package:api_integration/models/resp_products.dart';
 import 'package:flutter/widgets.dart';
@@ -9,6 +10,9 @@ import 'package:http/http.dart' as http;
 class Apiservice {
   //1)create base URL
   final String baseurl = "https://dummyjson.com";
+
+  final String baseurl1 = "https://jsonplaceholder.typicode.com";
+
   //2)create a function to parse this String to Uri
   Future<List<Products>?> fetchproductsall() async {
     Uri url = Uri.parse("$baseurl/products");
@@ -80,6 +84,24 @@ class Apiservice {
 
         var plist = resp.products;
         return plist;
+      }
+    } catch (e) {
+      debugPrint("Exception:::::::::::::::::::$e");
+    }
+    return null;
+  }
+
+  Future<List<Posts>?> posts() async {
+    Uri url = Uri.parse("$baseurl1/posts");
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        var jsonlist = jsonDecode(response.body) as List;
+
+        return jsonlist.map((singlejson) {
+          return Posts.fromJson(singlejson);
+        }).toList();
       }
     } catch (e) {
       debugPrint("Exception:::::::::::::::::::$e");

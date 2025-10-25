@@ -1,6 +1,7 @@
 import 'package:api_integration/models/resp_products.dart';
 import 'package:api_integration/service/apiservice.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer_animation/shimmer_animation.dart';
 
 class MyWidget extends StatefulWidget {
   const MyWidget({super.key});
@@ -28,7 +29,9 @@ class _MyWidgetState extends State<MyWidget> {
 
   Future<void> fetch(String query) async {
     toggle();
+
     plist = await apiservice.searchProducts(query);
+    await Future.delayed(Duration(seconds: 5));
     toggle();
   }
 
@@ -87,7 +90,32 @@ class _MyWidgetState extends State<MyWidget> {
 
   Widget _body() {
     if (isloading) {
-      return Center(child: CircularProgressIndicator());
+      return Shimmer(
+        duration: Duration(seconds: 3), //Default value
+        interval: Duration(seconds: 1), //Default value: Duration(seconds: 0)
+        color: Colors.white, //Default value
+        colorOpacity: 0.3, //Default value
+        enabled: true, //Default value
+        direction: ShimmerDirection.fromLeftToRight(), //Default Value
+        child: ListView.builder(
+          itemCount: 20,
+          itemBuilder: (context, index) {
+            return ListTile(
+              leading: CircleAvatar(backgroundColor: Colors.grey[200]),
+              title: Container(
+                height: 20,
+                width: double.maxFinite,
+                color: Colors.grey[200],
+              ),
+              subtitle: Container(
+                height: 20,
+                width: double.maxFinite,
+                color: Colors.grey[200],
+              ),
+            );
+          },
+        ),
+      );
     } else if (plist!.isEmpty) {
       return Center(child: Text("No Data"));
     } else {
